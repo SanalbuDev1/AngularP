@@ -8,3 +8,15 @@
 img {
     max-width: 100%;
 }
+
+a {
+    text-decoration: none;
+    padding: 5px;
+    border: 2px solid black;
+}
+
+a:hover {
+    text-decoration: none;
+    padding: 5px;
+    background-color: #ccc;
+}
