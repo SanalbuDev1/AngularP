@@ -1,64 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Product } from '../../../product.model';
 
+import {HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
-  products:Product[] = [
-    {
-      id: '1',
-      image: 'assets/images/camiseta.png',
-      title: 'Camiseta',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '2',
-      image: 'assets/images/hoodie.png',
-      title: 'Hoodie',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '3',
-      image: 'assets/images/mug.png',
-      title: 'Mug',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '4',
-      image: 'assets/images/pin.png',
-      title: 'Pin',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '5',
-      image: 'assets/images/stickers1.png',
-      title: 'Stickers',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    },
-    {
-      id: '6',
-      image: 'assets/images/stickers2.png',
-      title: 'Stickers',
-      price: 80000,
-      description: 'bla bla bla bla bla'
-    }
-  ];
+  products:Product[];
 
-  constructor() { }
+  constructor(private http: HttpClient) { 
 
-  getAllProducts(){
-    return this.products;
   }
 
-  getProduct(id: string){
-    return this.products.find(item => id === item.id);
+  getAllProducts(): Observable<Product[]>{
+    return this.http.get<Product[]>(`${environment.url}`)
   }
+
+  getProduct(id: string): Observable<Product>{
+    return this.http.get<Product>(`${environment.url}/${id}`)
+  }
+
+  createProduct(product:Product): Observable<Product>{
+    return this.http.post<Product>(`${environment.url}`,product);
+  }
+
+  editProduct(id:string, changes:Partial<Product>): Observable<Product>{
+    return this.http.put<Product>(`${environment.url}/${id}`,changes);
+  }
+
+  deleteProduct(id:string): Observable<Product>{
+    return this.http.delete<Product>(`${environment.url}/${id}`);
+  }
+
+  
 }

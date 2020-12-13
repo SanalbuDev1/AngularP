@@ -7,7 +7,7 @@ import { DemoComponent } from './demo/demo.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 //import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { LayoutComponent } from './layout/layout.component';
-import { AdminGuard } from './admin.guard';
+import { AdminGuard } from './core/guard/admin.guard';
 
 
 const routes: Routes = [
@@ -34,7 +34,7 @@ const routes: Routes = [
       },
       {
         path:'products',
-        loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
+        loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
       },
       {
         path:'contact',
@@ -43,9 +43,13 @@ const routes: Routes = [
       },     
       {
         path:'demo',
-        component:DemoComponent
+        component: DemoComponent,
       }
     ]
+},
+{
+  path:'admin',
+  loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule),
 },
 {path: '**', redirectTo: '/home'},
 
